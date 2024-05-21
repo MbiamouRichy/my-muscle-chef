@@ -1,13 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
 import App from "./App";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <React.StrictMode>
+  <main className="relative h-screen w-screen overflow-hidden">
     <App />
-  </React.StrictMode>
+  </main>
 );
 
 // If you want to start measuring performance in your app, pass a function
