@@ -6,7 +6,7 @@ export default function MyFuel() {
   let snap = useSnapshot(state);
   return (
     <svg
-      className="absolute left-1/2 lg:left-0 bottom-0 md:w-[45%] md:h-1/2 w-full h-full -translate-x-1/2 lg:translate-x-0 -translate-y-[90%] lg:-translate-y-[30%]"
+      className="absolute z-30 left-1/2 lg:left-0 lg:bottom-[30%] bottom-1/2 w-[45%] lg:w-[60%] h-1/2 -translate-x-1/2 lg:translate-x-0"
       width="706"
       height="371"
       viewBox="0 0 706 371"

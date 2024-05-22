@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import React, { useState } from "react";
 import { useSnapshot } from "valtio";
 import { state } from "./proxy/store";
@@ -17,11 +18,14 @@ export default function CanNav() {
     setActiveCans(idx);
     state.SelectedColor = snap.ColorList[idx];
     state.SelectedText = snap.TextList[idx];
+    state.SelectedIcons = snap.IconsCansList[idx];
+
+    console.log(state.SelectedIcons[0]);
   };
   const snap = useSnapshot(state);
   return (
     <>
-      <div className="bottom-0 right-0 absolute w-full flex flex-row items-center justify-center lg:justify-end">
+      <div className="bottom-0 z-30 right-0 absolute w-full flex flex-row items-center justify-center lg:justify-end">
         <ul
           style={{
             backgroundColor: snap.SelectedColor,
@@ -47,12 +51,22 @@ export default function CanNav() {
         </ul>
       </div>
 
-      <div
+      <motion.div
+        initial={{ y: 1000 }}
+        animate={{ y: 1 }}
+        transition={{ ease: "backOut", duration: 0.5 }}
         style={{ textShadow: `${snap.SelectedColor} 0px 0px 40px` }}
-        className="text-center whitespace-pre-line absolute text-white right-[12%] md:right-[15%] xl:right-[5%] bottom-[30%] m-0 pointer-events-none text-[2.1em] md:text-[6em] leading-[18px] md:leading-[48px]"
+        className="text-center z-30 whitespace-pre-line absolute text-white right-[12%] md:right-[15%] xl:right-[5%] bottom-[30%] m-0 pointer-events-none text-[2.1em] md:text-[6em] leading-[18px] md:leading-[48px]"
       >
-        {snap.SelectedText.split(/\s+/).join("\n")}
-      </div>
+        <motion.p
+          key={snap.SelectedText}
+          initial={{ x: 500, rotate: 260 }}
+          animate={{ x: 0, rotate: -10 }}
+          transition={{ ease: "backOut", duration: 0.5 }}
+        >
+          {snap.SelectedText.split(/\s+/).join("\n")}
+        </motion.p>
+      </motion.div>
     </>
   );
 }
