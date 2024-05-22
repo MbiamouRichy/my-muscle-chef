@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { useSnapshot } from "valtio";
 import { state } from "./proxy/store";
 
@@ -12,15 +12,16 @@ const cans = [
   "cosmic_can.png",
 ];
 
-export default function CanNav() {
+function CanNav() {
   let [activeCans, setActiveCans] = useState(0);
   const handleActiveCans = (idx) => {
     setActiveCans(idx);
     state.SelectedColor = snap.ColorList[idx];
     state.SelectedText = snap.TextList[idx];
     state.SelectedIcons = snap.IconsCansList[idx];
+    state.SelectedTexture = `/cans/${cans[idx]}`;
 
-    console.log(state.SelectedIcons[0]);
+    console.log(state.SelectedTexture);
   };
   const snap = useSnapshot(state);
   return (
@@ -62,7 +63,7 @@ export default function CanNav() {
           key={snap.SelectedText}
           initial={{ x: 500, rotate: 260 }}
           animate={{ x: 0, rotate: -10 }}
-          transition={{ ease: "backOut", duration: 0.5 }}
+          transition={{ ease: "backOut", duration: 1, delay: 0.5 }}
         >
           {snap.SelectedText.split(/\s+/).join("\n")}
         </motion.p>
@@ -70,3 +71,5 @@ export default function CanNav() {
     </>
   );
 }
+
+export default memo(CanNav);

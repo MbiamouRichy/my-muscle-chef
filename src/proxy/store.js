@@ -28,4 +28,5 @@ export const state = proxy({
   SelectedColor: "rgb(78, 15, 120)",
   SelectedText: "Grape Thunder",
   SelectedIcons: { icon1: "/icons/grapes.svg", icon2: "/icons/energy.svg" },
+  SelectedTexture: "/cans/grape_can.png",
 });
