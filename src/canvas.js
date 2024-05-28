@@ -1,10 +1,4 @@
-import {
-  Center,
-  Environment,
-  Image,
-  MeshWobbleMaterial,
-  SpotLight,
-} from "@react-three/drei";
+import { Center, Environment, Image, SpotLight } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion-3d";
@@ -31,7 +25,7 @@ export default function Models() {
         castShadow={true}
         color={snap.SelectedColor}
       />
-      {/* <ShereBackground snap={snap} /> */}
+      <ShereBackground snap={snap} />
       <Center
         position={[innerWidth > 768 ? 0.5 : 0, 0, innerWidth > 768 ? 0 : -0.5]}
       >
@@ -45,14 +39,10 @@ export default function Models() {
 
 const ShereBackground = ({ snap }) => {
   return (
-    <motion.mesh
-      transition={{ ease: "backOut", duration: 0.5 }}
-      scale={30}
-      position={[0, 0, -5]}
-    >
+    <mesh scale={30} position={[0, 0, -5]}>
       <planeGeometry />
-      <MeshWobbleMaterial color={snap.SelectedColor} />
-    </motion.mesh>
+      <meshStandardMaterial color={snap.SelectedColor} />
+    </mesh>
   );
 };
 
@@ -74,7 +64,7 @@ function IconsGroup() {
         exit={{ scale: 0, rotateZ: -2, x: -0.5 }}
         transition={{ ease: "backOut", duration: 0.5 }}
         ref={ref}
-        scale={0.35}
+        scale={0.28}
       >
         <Icon url={snap.SelectedIcons.icon1} position={[0.5, -0.5, 0]} />
         <Icon url={snap.SelectedIcons.icon2} position={[3, 1.5, 0]} />

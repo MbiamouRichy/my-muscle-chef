@@ -7,19 +7,24 @@ import { useFrame } from "@react-three/fiber";
 import { motion } from "framer-motion-3d";
 import { easing } from "maath";
 import React, { useRef } from "react";
+import * as THREE from "three";
 import { useSnapshot } from "valtio";
 import { state } from "./proxy/store";
-
 export function Can(props) {
   const { nodes, materials } = useGLTF("/project.glb");
   let ref = useRef();
   let snap = useSnapshot(state);
   const texture = useTexture(snap.SelectedTexture);
+  // Configurer les propriétés de la texture
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(1, 1);
+  texture.rotation = -0.1;
 
   useFrame((state, delta) => {
     easing.dampE(
       ref.current.rotation,
-      [state.pointer.y / 5, -state.pointer.x / 10, 0],
+      [state.pointer.y / 5, -state.pointer.x / 5, 0],
       0.5,
       delta
     );
@@ -27,6 +32,11 @@ export function Can(props) {
 
   return (
     <motion.group
+      key={snap.SelectedTexture}
+      initial={{ rotateY: 20 }}
+      animate={{ rotateY: 0 }}
+      exit={{ rotateY: 20 }}
+      transition={{ ease: "easeOut", duration: 1 }}
       ref={ref}
       scale={0.2}
       position={[0.5, -0.2, 0]}
@@ -38,23 +48,31 @@ export function Can(props) {
         receiveShadow
         geometry={nodes.mesh_0.geometry}
         material={materials.water}
-        position={[0.003, 0, 0.93]}
+        position={[0.002, 0, -0.929]}
         rotation={[-Math.PI / 2, 0, 0]}
-      ></mesh>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.mesh_1.geometry}
-        material={materials.Metallic}
-        position={[-0.002, 0, 0.914]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      ></mesh>
+      />
+      <group position={[0.002, 0, -0.929]} rotation={[-Math.PI / 2, 0, 0]}>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.mesh_1.geometry}
+          material={materials.Metallic}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.mesh_1_1.geometry}
+          material={nodes.mesh_1_1.material}
+        >
+          <meshBasicMaterial side={THREE.DoubleSide} map={texture} />
+        </mesh>
+      </group>
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.mesh_2.geometry}
         material={materials.water}
-        position={[0.003, 0, 0.93]}
+        position={[0.002, 0, -0.929]}
         rotation={[-Math.PI / 2, 0, 0]}
       />
     </motion.group>
@@ -63,6 +81,7 @@ export function Can(props) {
 
 useGLTF.preload("/project.glb");
 [
+  "test.png",
   "/cans/grape_can.png",
   "/cans/apple_can.png",
   "/cans/blue_can.png",
