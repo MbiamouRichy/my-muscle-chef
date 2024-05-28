@@ -19,7 +19,7 @@ export function Can(props) {
   useFrame((state, delta) => {
     easing.dampE(
       ref.current.rotation,
-      [state.pointer.y / 20, -state.pointer.x / 20, 0],
+      [state.pointer.y / 5, -state.pointer.x / 10, 0],
       0.5,
       delta
     );

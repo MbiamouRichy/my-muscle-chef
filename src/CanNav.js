@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import React, { memo, useState } from "react";
 import { useSnapshot } from "valtio";
 import { state } from "./proxy/store";
@@ -59,14 +59,17 @@ function CanNav() {
         style={{ textShadow: `${snap.SelectedColor} 0px 0px 40px` }}
         className="text-center z-30 whitespace-pre-line absolute text-white right-[12%] md:right-[15%] xl:right-[5%] bottom-[30%] m-0 pointer-events-none text-[2.1em] md:text-[6em] leading-[18px] md:leading-[48px]"
       >
-        <motion.p
-          key={snap.SelectedText}
-          initial={{ x: 500, rotate: 260 }}
-          animate={{ x: 0, rotate: -10 }}
-          transition={{ ease: "backOut", duration: 1, delay: 0.5 }}
-        >
-          {snap.SelectedText.split(/\s+/).join("\n")}
-        </motion.p>
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={snap.SelectedText}
+            initial={{ x: 500, rotate: 260 }}
+            animate={{ x: 0, rotate: -10, transition: { delay: 0.01 } }}
+            exit={{ scale: 0, rotate: -260, x: -500, y: 500 }}
+            transition={{ ease: "backOut", duration: 1 }}
+          >
+            {snap.SelectedText.split(/\s+/).join("\n")}
+          </motion.p>
+        </AnimatePresence>
       </motion.div>
     </>
   );

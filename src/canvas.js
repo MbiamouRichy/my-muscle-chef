@@ -1,21 +1,21 @@
 import {
-  AccumulativeShadows,
   Center,
   Environment,
   Image,
-  RandomizedLight,
+  MeshWobbleMaterial,
   SpotLight,
 } from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
+import { AnimatePresence } from "framer-motion";
 import { motion } from "framer-motion-3d";
-import { easing } from "maath";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useSnapshot } from "valtio";
 import { Can } from "./Can";
 import { state } from "./proxy/store";
 
 export default function Models() {
   let snap = useSnapshot(state);
+  const { innerWidth } = window;
 
   return (
     <Canvas
@@ -24,16 +24,17 @@ export default function Models() {
       camera={{ position: [0, 0, 1.1], fov: 50 }}
       eventPrefix="client"
     >
-      <ambientLight intensity={30} />
       <SpotLight
         position={[6, 0, 0]}
         penumbra={1}
-        intensity={50}
+        intensity={0.5}
         castShadow={true}
         color={snap.SelectedColor}
       />
-      <Backdrop />
-      <Center position={[0.5, 0, 0]}>
+      {/* <ShereBackground snap={snap} /> */}
+      <Center
+        position={[innerWidth > 768 ? 0.5 : 0, 0, innerWidth > 768 ? 0 : -0.5]}
+      >
         <Can />
         <IconsGroup />
       </Center>
@@ -42,46 +43,22 @@ export default function Models() {
   );
 }
 
-function Backdrop() {
-  const shadows = useRef();
-
-  useFrame((state, delta) =>
-    easing.dampC(
-      shadows.current.getMesh().material.color,
-      state.selectedColor,
-      0.5,
-      delta
-    )
-  );
-
+const ShereBackground = ({ snap }) => {
   return (
-    <AccumulativeShadows
-      ref={shadows}
-      temporal
-      frames={60}
-      alphaTest={0.85}
-      scale={10}
-      rotation={[Math.PI / 2, 0, 0]}
-      position={[0, 0, -0.4]}
+    <motion.mesh
+      transition={{ ease: "backOut", duration: 0.5 }}
+      scale={30}
+      position={[0, 0, -5]}
     >
-      <RandomizedLight
-        amount={4}
-        radius={9}
-        intensity={0.55}
-        ambient={0.25}
-        position={[5, 5, 0]}
-      />
-    </AccumulativeShadows>
+      <planeGeometry />
+      <MeshWobbleMaterial color={snap.SelectedColor} />
+    </motion.mesh>
   );
-}
+};
 
 function IconsGroup() {
   let snap = useSnapshot(state);
   let ref = useRef();
-  useEffect(() => {
-    let { innerWidth } = window;
-    console.log(innerWidth);
-  });
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
@@ -89,17 +66,20 @@ function IconsGroup() {
   });
 
   return (
-    <motion.group
-      key={snap.SelectedIcons.icon1}
-      initial={{ x: -2, scale: 0 }}
-      animate={{ x: 0, scale: 0.3 }}
-      transition={{ ease: "backOut", duration: 0.5 }}
-      ref={ref}
-      scale={0.35}
-    >
-      <Icon url={snap.SelectedIcons.icon1} position={[0.5, -0.5, 0]} />
-      <Icon url={snap.SelectedIcons.icon2} position={[3, 1.5, 0]} />
-    </motion.group>
+    <AnimatePresence mode="wait">
+      <motion.group
+        key={snap.SelectedIcons.icon1}
+        initial={{ rotateZ: -2 }}
+        animate={{ rotateZ: 0 }}
+        exit={{ scale: 0, rotateZ: -2, x: -0.5 }}
+        transition={{ ease: "backOut", duration: 0.5 }}
+        ref={ref}
+        scale={0.35}
+      >
+        <Icon url={snap.SelectedIcons.icon1} position={[0.5, -0.5, 0]} />
+        <Icon url={snap.SelectedIcons.icon2} position={[3, 1.5, 0]} />
+      </motion.group>
+    </AnimatePresence>
   );
 }
 
