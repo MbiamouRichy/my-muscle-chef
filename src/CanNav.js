@@ -55,7 +55,7 @@ function CanNav() {
       <motion.div
         initial={{ y: 1000 }}
         animate={{ y: 1 }}
-        transition={{ ease: "backOut", duration: 0.5 }}
+        transition={{ ease: "easeOut", duration: 0.5 }}
         style={{ textShadow: `${snap.SelectedColor} 0px 0px 40px` }}
         className="text-center z-30 whitespace-pre-line absolute text-white right-[12%] md:right-[15%] xl:right-[5%] bottom-[30%] m-0 pointer-events-none text-[2.1em] md:text-[6em] leading-[18px] md:leading-[48px]"
       >

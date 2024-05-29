@@ -10,6 +10,7 @@ import React, { useRef } from "react";
 import * as THREE from "three";
 import { useSnapshot } from "valtio";
 import { state } from "./proxy/store";
+
 export function Can(props) {
   const { nodes, materials } = useGLTF("/project.glb");
   let ref = useRef();
@@ -33,9 +34,9 @@ export function Can(props) {
   return (
     <motion.group
       key={snap.SelectedTexture}
-      initial={{ rotateY: 20 }}
+      initial={{ rotateY: 10 }}
       animate={{ rotateY: 0 }}
-      exit={{ rotateY: 20 }}
+      exit={{ rotateY: 10 }}
       transition={{ ease: "easeOut", duration: 1 }}
       ref={ref}
       scale={0.2}

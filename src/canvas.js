@@ -6,6 +6,7 @@ import React, { useRef } from "react";
 import { useSnapshot } from "valtio";
 import { Can } from "./Can";
 import { state } from "./proxy/store";
+import "./util";
 
 export default function Models() {
   let snap = useSnapshot(state);
@@ -25,24 +26,35 @@ export default function Models() {
         castShadow={true}
         color={snap.SelectedColor}
       />
-      <ShereBackground snap={snap} />
-      <Center
-        position={[innerWidth > 768 ? 0.5 : 0, 0, innerWidth > 768 ? 0 : -0.5]}
-      >
-        <Can />
-        <IconsGroup />
-      </Center>
+      <AnimatePresence mode="wait">
+        <PlaneBackground snap={snap} />
+        <Center position={[innerWidth >= 1024 ? 0.5 : 0, 0, 0]}>
+          <Can />
+          <IconsGroup />
+        </Center>
+      </AnimatePresence>
       <Environment preset="sunset" blur={0.3} />
     </Canvas>
   );
 }
 
-const ShereBackground = ({ snap }) => {
+const PlaneBackground = ({ snap }) => {
   return (
-    <mesh scale={30} position={[0, 0, -5]}>
-      <planeGeometry />
+    <motion.mesh
+      key={snap.SelectedColor}
+      initial={{ scale: 0 }}
+      animate={{
+        scale: 30,
+        transition: { ease: "easeOut", duration: 1, delay: 0.5 },
+      }}
+      exit={{ scale: 0 }}
+      scale={30}
+      position={[0.5, 0, -5]}
+    >
+      <bentPlaneGeometry args={[0.3, 1, 1, 20, 20]} />
+
       <meshStandardMaterial color={snap.SelectedColor} />
-    </mesh>
+    </motion.mesh>
   );
 };
 
@@ -59,10 +71,10 @@ function IconsGroup() {
     <AnimatePresence mode="wait">
       <motion.group
         key={snap.SelectedIcons.icon1}
-        initial={{ rotateZ: -2 }}
-        animate={{ rotateZ: 0 }}
+        initial={{ scale: 0, rotateZ: -2, x: -0.5 }}
+        animate={{ rotateZ: 0, scale: 0.28, x: 0 }}
         exit={{ scale: 0, rotateZ: -2, x: -0.5 }}
-        transition={{ ease: "backOut", duration: 0.5 }}
+        transition={{ ease: "easeOut", duration: 0.5 }}
         ref={ref}
         scale={0.28}
       >

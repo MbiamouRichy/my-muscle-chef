@@ -1,16 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
-import Models from "./canvas";
 import "./index.css";
+import Page from "./page";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(
-  <main className="relative h-screen w-screen overflow-hidden">
-    <App />
-    <Models />
-  </main>
-);
+root.render(<Page />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
