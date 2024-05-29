@@ -38,6 +38,7 @@ export default function Models() {
 }
 
 const PlaneBackground = ({ snap }) => {
+  let { innerWidth } = window;
   return (
     <motion.mesh
       key={snap.SelectedColor}
@@ -48,7 +49,11 @@ const PlaneBackground = ({ snap }) => {
       }}
       exit={{ scale: 0 }}
       scale={30}
-      position={[0.5, 0, -5]}
+      position={[
+        innerWidth >= 1024 ? 1.5 : 0,
+        innerWidth >= 1024 ? -0.2 : 0,
+        -5,
+      ]}
     >
       <bentPlaneGeometry args={[0.3, 1, 1, 20, 20]} />
 
