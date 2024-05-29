@@ -38,7 +38,7 @@ export function Can(props) {
       transition={{ ease: "backOut", duration: 1 }}
       ref={ref}
       scale={0.2}
-      position={[0.5, -0.1, 0]}
+      position={[0.5, 0.1, 0]}
       {...props}
       dispose={null}
     >
