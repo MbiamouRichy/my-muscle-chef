@@ -19,7 +19,7 @@ export function Can(props) {
   // Configurer les propriétés de la texture
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(1, 1);
+  texture.repeat.set(5, 5);
   texture.rotation = -3.2;
 
   useFrame((state, delta) => {
