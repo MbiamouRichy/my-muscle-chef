@@ -26,13 +26,12 @@ export default function Models() {
         castShadow={true}
         color={snap.SelectedColor}
       />
-      <AnimatePresence mode="wait">
-        <PlaneBackground snap={snap} />
-        <Center position={[innerWidth >= 1024 ? 0.5 : 0, 0, 0]}>
-          <Can />
-          <IconsGroup />
-        </Center>
-      </AnimatePresence>
+      <PlaneBackground snap={snap} />
+      <Center position={[innerWidth >= 1024 ? 0.5 : 0, 0, 0]}>
+        <Can />
+        <IconsGroup />
+      </Center>
+
       <Environment preset="sunset" blur={0.3} />
     </Canvas>
   );
@@ -64,7 +63,7 @@ function IconsGroup() {
 
   useFrame((state) => {
     const t = state.clock.getElapsedTime();
-    ref.current.position.y = (0 + Math.sin(t / 3)) / 20;
+    ref.current.position.y = (0 + Math.sin(t / 3)) / 15;
   });
 
   return (

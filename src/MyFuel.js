@@ -7,7 +7,7 @@ export default function MyFuel() {
   let snap = useSnapshot(state);
   return (
     <motion.svg
-      initial={{ y: 100, opacity: 0 }}
+      initial={{ y: 500, opacity: 0 }}
       animate={{
         y: 0,
         opacity: 1,

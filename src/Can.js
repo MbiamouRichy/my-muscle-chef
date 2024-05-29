@@ -20,7 +20,7 @@ export function Can(props) {
   texture.wrapS = THREE.RepeatWrapping;
   texture.wrapT = THREE.RepeatWrapping;
   texture.repeat.set(1, 1);
-  texture.rotation = -0.1;
+  texture.rotation = -3.2;
 
   useFrame((state, delta) => {
     easing.dampE(
@@ -33,49 +33,54 @@ export function Can(props) {
 
   return (
     <motion.group
-      key={snap.SelectedTexture}
-      initial={{ rotateY: 10 }}
-      animate={{ rotateY: 0 }}
-      exit={{ rotateY: 10 }}
-      transition={{ ease: "easeOut", duration: 1 }}
-      ref={ref}
-      scale={0.2}
-      position={[0.5, -0.2, 0]}
-      {...props}
-      dispose={null}
+      initial={{ y: -10 }}
+      animate={{ y: 0 }}
+      transition={{ ease: "backOut", duration: 1 }}
     >
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.mesh_0.geometry}
-        material={materials.water}
-        position={[0.002, 0, -0.929]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
-      <group position={[0.002, 0, -0.929]} rotation={[-Math.PI / 2, 0, 0]}>
+      <motion.group
+        key={snap.SelectedTexture}
+        initial={{ rotateY: 10 }}
+        animate={{ rotateY: 0 }}
+        transition={{ ease: "easeOut", duration: 1 }}
+        ref={ref}
+        scale={0.2}
+        position={[0.5, -0.2, 0]}
+        {...props}
+        dispose={null}
+      >
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.mesh_1.geometry}
-          material={materials.Metallic}
+          geometry={nodes.mesh_0.geometry}
+          material={materials.water}
+          position={[0.002, 0, -0.929]}
+          rotation={[-Math.PI / 2, 0, 0]}
         />
+        <group position={[0.002, 0, -0.929]} rotation={[-Math.PI / 2, 0, 0]}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.mesh_1.geometry}
+            material={materials.Metallic}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.mesh_1_1.geometry}
+            material={nodes.mesh_1_1.material}
+          >
+            <meshBasicMaterial map={texture} />
+          </mesh>
+        </group>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.mesh_1_1.geometry}
-          material={nodes.mesh_1_1.material}
-        >
-          <meshBasicMaterial side={THREE.DoubleSide} map={texture} />
-        </mesh>
-      </group>
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.mesh_2.geometry}
-        material={materials.water}
-        position={[0.002, 0, -0.929]}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
+          geometry={nodes.mesh_2.geometry}
+          material={materials.water}
+          position={[0.002, 0, -0.929]}
+          rotation={[-Math.PI / 2, 0, 0]}
+        />
+      </motion.group>
     </motion.group>
   );
 }
