@@ -36,17 +36,17 @@ export function Can(props) {
       initial={{ y: -10 }}
       animate={{ y: 0 }}
       transition={{ ease: "backOut", duration: 1 }}
-      ref={ref}
-      scale={0.2}
-      position={[0.5, 0.1, 0]}
-      {...props}
-      dispose={null}
     >
       <motion.group
         key={snap.SelectedTexture}
         initial={{ rotateY: 10 }}
         animate={{ rotateY: 0 }}
         transition={{ ease: "easeOut", duration: 1 }}
+        ref={ref}
+        scale={0.2}
+        position={[0.5, -0.2, 0]}
+        {...props}
+        dispose={null}
       >
         <mesh
           castShadow
